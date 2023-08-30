@@ -3,6 +3,7 @@ const listTitle = document.querySelector("#list-title");
 const countriesList = document.querySelector("#countries-list");
 const enterButton = document.querySelector("#enter");
 const countryQuery = document.querySelector("#country-query");
+const countryContainer = document.querySelector("#countries-container");
 
 // Global Variables
 let allCountries = [];
@@ -11,11 +12,23 @@ var delay = 2000;
 
 // INDEX request to restcountries API 
 const fetchCountries = async () => {
-    const response = await fetch("https://restcountries.com/v3.1/all");
-    console.log(response);
-    const jsonData = await response.json();
-    console.log(jsonData);
-    return jsonData;
+    try{
+        const response = await fetch("https://restcountries.com/v3.1/all");
+        if (!response.ok){
+            throw new Error(`Problem with retrieving data from API with status code ${response.status}`)
+        }
+        console.log(response);
+        const jsonData = await response.json();
+        console.log(jsonData);
+        return jsonData;
+    } catch (error) {
+        console.log(error);
+        const errorMessage = document.createElement("p");
+        errorMessage.textContent = error;
+        errorMessage.style = "display: flex; justify-content: center; font-size: 25px";
+        countryContainer.before(errorMessage);
+    }
+    
 }
 
 // SetUp function using promises to fetch countries and then assign the country data to allCountries and display the results to user. The function also calls on logInput to add an eventListener to the enter button
