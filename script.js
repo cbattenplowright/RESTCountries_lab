@@ -1,11 +1,12 @@
 // Query selectors
 const countriesList = document.querySelector("#countries-list");
 const enterButton = document.querySelector("#enter");
-const input = document.querySelector("#country-query");
+const countryQuery = document.querySelector("#country-query");
 
 // Global Variables
 let allCountries;
 let filteredCountries;
+var delay = 2000;
 
 // INDEX request to restcountries API 
 const fetchCountries = async () => {
@@ -59,9 +60,10 @@ const createCountryElement = (country) => {
 // Attaches an event listener to the enterButton when clicked it filters and outputs the countries including the input string
 const logInput = () => {
     enterButton.addEventListener("click", () => {
-        console.log(input.value);
-        filterByFormInput(input.value);
-        addCountriesToUnorderedList(filteredCountries);
+        console.log(countryQuery.value);
+        filterByFormInput(countryQuery.value);
+
+        setTimeout(() => {addCountriesToUnorderedList(filteredCountries)}, delay);
     })
 }
 
@@ -75,6 +77,10 @@ const filterByFormInput = (countryQuery) => {
 // Filter logic
 const countryIncludesLetters = (country, countryQuery) => {
     return country.name.common.toLowerCase().includes(countryQuery.toLowerCase());
+}
+
+const changeListTitle = (listTitle) => {
+
 }
 
 setUp();
