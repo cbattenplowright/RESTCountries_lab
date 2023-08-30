@@ -15,6 +15,7 @@ const SetUp = () => {
             console.log(allCountries);
             addCountryToList();
         });
+    logInput();
 }
 
 const addCountryToList = () => {
@@ -42,8 +43,16 @@ const addCountryToList = () => {
 
         console.log(countriesList);
         console.log(countryListItem);
+    };
+};
 
-    }
+const logInput = () => {
+    const enterButton = document.querySelector("#enter");
+    const input = document.querySelector("#country");
+
+    enterButton.addEventListener("click", () => {
+        console.log(input.value);
+    })
 }
 
 SetUp();
