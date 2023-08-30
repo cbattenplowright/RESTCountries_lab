@@ -1,4 +1,4 @@
-let allCountries;
+let countryList;
 
 const fetchCountries = async () => {
     const response = await fetch("https://restcountries.com/v3.1/all");
@@ -11,18 +11,18 @@ const fetchCountries = async () => {
 const SetUp = () => {
     fetchCountries()
         .then((jsonData) => {
-            allCountries = jsonData;
-            console.log(allCountries);
+            countryList = jsonData;
+            console.log(countryList);
             addCountryToList();
         });
     logInput();
 }
 
 const addCountryToList = () => {
-    for (let i = 0; i < allCountries.length; i++){
-        const countryFromArray = allCountries[i];
-
-        const countriesList = document.querySelector("#countries-list")
+    const countriesList = document.querySelector("#countries-list");
+    countriesList.innerHTML = "";
+    for (let i = 0; i < countryList.length; i++){
+        const countryFromArray = countryList[i];
 
         console.log(countryFromArray);
         const countryListItem = document.createElement("li");
@@ -53,6 +53,7 @@ const logInput = () => {
     enterButton.addEventListener("click", () => {
         console.log(input.value);
         filterByFormInput(input.value);
+        addCountryToList(countryList);
     })
 }
 
@@ -62,9 +63,11 @@ const filterByFormInput = (countryQuery) => {
         return countryPassedIn.name.common.toLowerCase().includes(countryQuery.toLowerCase());
     }
 
-    const filteredCountries = allCountries.filter(country => includesLetters(country));
+    const filteredCountries = countryList.filter(country => includesLetters(country));
     console.log(filteredCountries);
-    
+    countryList = filteredCountries;
+    console.log("This is the country list");
+    console.log(countryList);
 };
 
 SetUp();
