@@ -1,7 +1,7 @@
 // Query selectors
 const countriesList = document.querySelector("#countries-list");
 const enterButton = document.querySelector("#enter");
-const input = document.querySelector("#country");
+const input = document.querySelector("#country-query");
 
 // Global Variables
 let allCountries;
@@ -31,26 +31,29 @@ const setUp = () => {
 const addCountriesToUnorderedList = (countryList) => {
     countriesList.innerHTML = "";
     for (let i = 0; i < countryList.length; i++) {
-        const countryFromArray = countryList[i];
+        const countryElement = createCountryElement(countryList[i]);
+        countriesList.appendChild(countryElement);
+    };
+};
+
+// Creates the country element
+const createCountryElement = (country) => {
         const countryListItem = document.createElement("li");
         const name = document.createElement("h4");
         const continent = document.createElement("p");
         const population = document.createElement("p");
 
-        name.innerText = countryFromArray.name.common;
+        name.innerText = country.name.common;
         countryListItem.appendChild(name);
 
-        continent.innerText = countryFromArray.continents;
+        continent.innerText = country.continents;
         countryListItem.appendChild(continent);
 
-        population.innerText = countryFromArray.population;
+        population.innerText = country.population;
         countryListItem.appendChild(population);
 
-        countriesList.appendChild(countryListItem);
-
-        console.log(countriesList);
-        console.log(countryListItem);
-    };
+        return countryListItem;
+        
 };
 
 // Attaches an event listener to the enterButton when clicked it filters and outputs the countries including the input string
@@ -62,15 +65,16 @@ const logInput = () => {
     })
 }
 
-// Filters the countries by the input string and updates the filteredCountries variable
+// Filters the countries by the input string and updates the filteredCountries array
 const filterByFormInput = (countryQuery) => {
-
-    const includesLetters = (countryPassedIn) => {
-        return countryPassedIn.name.common.toLowerCase().includes(countryQuery.toLowerCase());
-    }
-
-    filteredCountries = allCountries.filter(country => includesLetters(country));
+    
+    filteredCountries = allCountries.filter(country => countryIncludesLetters(country, countryQuery));
     console.log(filteredCountries);
 };
+
+// Filter logic
+const countryIncludesLetters = (country, countryQuery) => {
+    return country.name.common.toLowerCase().includes(countryQuery.toLowerCase());
+}
 
 setUp();
