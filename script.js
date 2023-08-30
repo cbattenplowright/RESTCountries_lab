@@ -52,7 +52,19 @@ const logInput = () => {
 
     enterButton.addEventListener("click", () => {
         console.log(input.value);
+        filterByFormInput(input.value);
     })
 }
+
+const filterByFormInput = (countryQuery) => {
+    
+    const includesLetters = (countryPassedIn) => {
+        return countryPassedIn.name.common.toLowerCase().includes(countryQuery.toLowerCase());
+    }
+
+    const filteredCountries = allCountries.filter(country => includesLetters(country));
+    console.log(filteredCountries);
+    
+};
 
 SetUp();
