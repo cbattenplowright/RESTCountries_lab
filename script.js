@@ -12,6 +12,7 @@ var delay = 2000;
 
 // INDEX request to restcountries API 
 const fetchCountries = async () => {
+    // error handling if response does not return a success status code
     try{
         const response = await fetch("https://restcountries.com/v3.1/all");
         if (!response.ok){
@@ -62,10 +63,10 @@ const createCountryElement = (country) => {
     name.innerText = country.name.common;
     countryListItem.appendChild(name);
 
-    continent.innerText = country.continents;
+    continent.innerText = "CONTINENT: " + country.continents;
     countryListItem.appendChild(continent);
 
-    population.innerText = country.population;
+    population.innerText = "POPULATION: " + country.population;
     countryListItem.appendChild(population);
 
     return countryListItem;
